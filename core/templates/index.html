@@ -51,7 +51,62 @@
               <input type="password" class="form-control my-2" placeholder="Senha" >
             </div>
               <button type="button" class="btn btn-primary btn-sm">Entrar</button>
-              <button type="button" class="btn btn-success btn-sm">Criar Conta</button>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Criar nova conta
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Cadastre-se</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Pagina de cadastro-->
+                    <div class="modal-body">
+                        <div class="row">
+                          <div class="col-6 ">
+                            <input type="text" class="form-control my-2" placeholder="Nome">
+                          </div>
+                          <div class="col-6">
+                            <input type="text" class="form-control my-2" placeholder="Sobrenome">
+                          </div>
+                        </div>
+                        <input type="email" class="form-control my-2" placeholder="E-mail">
+                        <input type="password" class="form-control my-2" placeholder="Nova senha">
+                        <p> Data de nascimento </p>
+                        <input type="date" class="form-control my-2">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Gênero </option>
+                          <option value="1">Masculino</option>
+                          <option value="2">Feminino</option>
+                          <option value="3">Outro</option>
+                        </select>
+                        <label class="py-3" > Perfil
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                          <label class="form-check-label" for="flexRadioDefault1">
+                            Estudante
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                          <label class="form-check-label" for="flexRadioDefault2">
+                            Professor
+                          </label>
+                        </div>
+                      </label>
+                       
+                     
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-success">Cadastre-se</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <a href="#" class="">Esqueceu a senha?</a>
               </div>
@@ -59,6 +114,8 @@
           </div>
       </div>
     <div>
+
+      
 
     <footer class="bg-light text-center text-lg-start">
         <!-- Copyright -->
@@ -68,6 +125,8 @@
         </div>
         <!-- Copyright -->
     </footer>
+
+
 
   </body>
 </html>
