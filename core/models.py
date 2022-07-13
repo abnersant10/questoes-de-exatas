@@ -1,29 +1,40 @@
 from django.db import models
-from django.forms import BooleanField, CharField, ChoiceField, DateField, EmailField, FloatField
+from django.contrib.auth.models import User
+from django.forms import BooleanField, CharField, ChoiceField, DateField, EmailField, FloatField, IntegerField
 
 # Create your models here.
 
 
-class usuario(models.Model):
-    nome = CharField(max_length=100)
-    sobrenome = CharField(max_length=100)
-    email = EmailField()
-    nascimento = DateField()
-    genero = CharField(max_length=50)
-    perfil = CharField(max_length=50)
-    teta = FloatField()
-
-
 class questao(models.Model):
-    nome = CharField(max_length=100)
-    curso = CharField(max_length=100)
-    disciplina = CharField(max_length=100)
-    assunto = CharField(max_length=100)
-    ano = CharField(max_length=20)
-    multidisciplinar = BooleanField()
-    a = FloatField()
-    b = FloatField()
-    c = FloatField()
-    enunciado = CharField(max_length=4096)
-    alternativas = ChoiceField()  # Adicionar as alternativas
-    solucao = CharField(max_length=4096)
+    cod = models.AutoField(primary_key=True)
+    curso = models.CharField(max_length=100)
+    disciplina = models.CharField(max_length=100)
+    assunto = models.CharField(max_length=100)
+    ano = models.IntegerField()
+    # parametros da TRI
+    a = models.FloatField()
+    b = models.FloatField()
+    c = models.FloatField()
+    enunciado = models.TextField()
+    alt_a = models.TextField()
+    alt_b = models.TextField()
+    alt_c = models.TextField()
+    alt_d = models.TextField()
+    alt_e = models.TextField()
+    gabarito = models.CharField(max_length=1)
+    solucao = models.TextField()
+
+    def __str__(self):
+        return str(self.cod)
+
+
+class teta_usuario(models.Model):
+    usuario = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=None, related_name='fk')
+    curso = models.CharField(max_length=100)
+    disciplina = models.CharField(max_length=100)
+    assunto = models.CharField(max_length=100)
+    teta = models.FloatField()
+
+    def __str__(self):
+        return str(self.usuario)
