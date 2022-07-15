@@ -12,9 +12,8 @@
  
 
   </head>
-  <body class=" ">
-    <div class="container " style="background-color: #F0E7BD;">
-
+  <body>
+    <div class="container" style="background-color: #F0E7BD;">
       <nav class="navbar navbar-expand-lg navbar-dark p-3 " style="background-color: #0a4275;">
         <a class="navbar-brand" href="#">Questões de Exatas</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alterna navegação">
@@ -38,39 +37,72 @@
         </div>
       </nav>
 
-      <div class="row py-index">
-          <div class="col-6 ">
-            
-            <h5> Questões Disponíveis</h5>
-            <h6> - Ciência da Computação : 86 </h6>
-            <h6> - Matemática : 52 </h6>
-            <h6> - Física : 22 </h6>
-           
-          </div> 
-
-          <div class="col-6 ">
-            <div class="col-6">
-              <form method="post">
-                {% csrf_token %}
-              <input type="text" class="form-control my-2" placeholder="E-mail" >
-              <input type="password" class="form-control my-2" placeholder="Senha" >
+      <section>
+        <form action="" method="post">
+        {% csrf_token %} <!-- {{ form }} -->
+        <div class="container">
+          <div class="row justify-content-center  py-3">
+            <div class="col-12 col-md-8 col-lg-8 col-xl-6">
+            <div class="row">
+                <div class="col text-center">
+                  <h2>Autocadastro</h2>
+                  <hr>
+                </div>
             </div>
-              <button type="submit" class="btn btn-primary btn-sm">Entrar</button>
-              <a class="btn btn-success btn-sm" href="{% url 'cadastro' %}" role="button">Criar nova conta</a>
-              
-            </form>
-              <div>
-                <a href="#" class="">Esqueceu a senha?</a>
+            <div class="row align-items-center ">
+                <div class="row align-items-center mt-4">
+                    <div class="col-6">
+                      <div class="input-group flex-nowrap">
+                        <input type="email" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="addon-wrapping" name="cpf" required>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group flex-nowrap">
+                          <input type="email" class="form-control" placeholder="Sobrenome" aria-label="Username" aria-describedby="addon-wrapping" name="cpf" required>
+                        </div>
+                      </div>
+                  </div>
+              <div class="row align-items-center mt-4">
+                <div class="col">
+                  <div class="input-group flex-nowrap">
+                    <input type="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="addon-wrapping" name="cpf" required>
+                  </div>
+                </div>
               </div>
-         
+              <div class="row align-items-center mt-4">
+                <div class="col-6">
+                  <div class="input-group flex-nowrap">
+                    <input type="email" class="form-control" placeholder="Nova Senha" aria-label="Username" aria-describedby="addon-wrapping" name="cpf" required>
+                  </div>
+                </div>
+              </div>
+              </div>
+                <button class="btn btn-success mt-4 btn-sm ">
+                    Cadastrar
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-secondary mt-4 btn-sm" >
+                    Voltar
+                </a>
+
+                <div class="row">
+                    <div class="col p-3">
+                      <hr>
+                    </div>
+                </div>
+
+
+                </div>
+                
+              </div>
+              
+            </div>
+            </div>
+
           </div>
-      </div>
-    <div>
-
-      
-
+          
+      </section>
     <!-- Footer -->
-  <footer class="text-center text-white" style="background-color: #0a4275;">
+  <footer class="text-center text-white container" style="background-color: #0a4275;">
     <!-- Grid container -->
     <div class="container p-4 pb-0">
       <!-- Section: CTA -->
@@ -91,7 +123,7 @@
     <!-- Copyright -->
   </footer>
   <!-- Footer -->
-
+</div>
 
 
   </body>
