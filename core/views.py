@@ -34,7 +34,6 @@ def cadastro(request):
         sobrenome = str(request.POST.get('sobrenome'))
         email = str(request.POST.get('email'))
         senha = str(request.POST.get('senha'))
-
         User.objects.create_user(
             username=email, first_name=nome, last_name=sobrenome, password=senha)
 
