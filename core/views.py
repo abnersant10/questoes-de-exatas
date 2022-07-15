@@ -1,3 +1,4 @@
+from urllib import request
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import *
@@ -13,12 +14,22 @@ def home(request):
         user = authenticate(request, username=email, password=senha)
         if user is not None:
             login(request, user)
-            return redirect('inicio')
-        else:
-            print("Senha invalida ?")
+            return redirect("pagina-inicial")
+    if request.user.is_authenticated:
+        return redirect("pagina-inicial")
     else:
+        # username ou senha incorreta
         return render(request, "index.html")
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 
 def cadastro(request):
     return render(request, 'cadastro.html')
+
+
+def pag_inicial(request):
+    return render(request, 'pagina-inicial.html')
