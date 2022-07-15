@@ -2,6 +2,7 @@ from urllib import request
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import *
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -28,6 +29,15 @@ def logout_view(request):
 
 
 def cadastro(request):
+    if request.method == 'POST':
+        nome = str(request.POST.get('nome'))
+        sobrenome = str(request.POST.get('sobrenome'))
+        email = str(request.POST.get('email'))
+        senha = str(request.POST.get('senha'))
+
+        User.objects.create_user(
+            username=email, first_name=nome, last_name=sobrenome, password=senha)
+
     return render(request, 'cadastro.html')
 
 
