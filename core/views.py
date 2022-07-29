@@ -42,3 +42,6 @@ def cadastro(request):
 
 def pag_inicial(request):
     return render(request, 'pagina-inicial.html')
+
+def consultar_questoes(request):
+    return render(request, 'consultar-questoes.html')
