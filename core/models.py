@@ -5,7 +5,11 @@ from django.forms import BooleanField, CharField, ChoiceField, DateField, EmailF
 # Create your models here.
 
 class questao(models.Model):
-    cod_q = models.AutoField(primary_key=True)
+    cod_q = models.AutoField(auto_created = True,
+                  primary_key = True,
+                  serialize = False, 
+                  verbose_name ='ID'
+                )
     enunciado = models.TextField()
     alt_a = models.TextField()
     alt_b = models.TextField()
@@ -15,13 +19,16 @@ class questao(models.Model):
     gabarito = models.CharField(max_length=1)
 
     def __str__(self):
-        return str(self.cod)
+        return str(self.cod_q)
 
 class questao_parametro(models.Model):
     cod_qp = models.OneToOneField(questao, on_delete=models.CASCADE)
     a = models.FloatField()
     b = models.FloatField()
     c = models.FloatField()
+
+    def __str__(self):
+        return str(self.cod_qp)
 
 class questao_catacteristica(models.Model):
     cod_qc = models.ForeignKey(questao, on_delete=models.CASCADE, default=None, related_name='fk')
@@ -30,6 +37,9 @@ class questao_catacteristica(models.Model):
     disciplina = models.CharField(max_length=45)
     assunto = models.CharField(max_length=45)
     ano = models.IntegerField()
+
+    def __str__(self):
+        return str(self.cod_qc)
 
 
 
