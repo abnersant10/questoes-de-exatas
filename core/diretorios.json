@@ -1,0 +1,11 @@
+{
+    "curso" : "Ciência da Computação",
+    "disciplina" : [
+        {
+            "Algebra Linear" : ["Matrizes", "Determinantes", "Equações Lineares", "Espaços Vetoriais", "Autovalores e Autovetores"],
+            "Algoritmos" : ["Estruturas de Controle", "Estutura de Repetição", "Vetores", "Matrizes", "Recursividade"],
+            "Banco de Dados" : ["Comandos SQL", "Modelo Entidade-Relacionamento", "Normalização"]
+        }
+    ]
+}
+

@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import *
 from django.contrib.auth.models import User
+import json
+import os
 
 # Create your views here.
 
@@ -44,4 +46,12 @@ def pag_inicial(request):
     return render(request, 'pagina-inicial.html')
 
 def consultar_questoes(request):
-    return render(request, 'consultar-questoes.html')
+    diretorios = json.load(open('C:\\Users\\abner\\OneDrive\\Documentos\\questoes-de-exatas\\core\\diretorios.json', encoding='utf8'))
+    print(diretorios)
+    
+  
+    context = {
+        "diretorios" : diretorios,
+    }
+
+    return render(request, 'consultar-questoes.html', context)

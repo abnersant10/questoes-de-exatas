@@ -4,6 +4,18 @@ from django.forms import BooleanField, CharField, ChoiceField, DateField, EmailF
 
 # Create your models here.
 
+class disciplina(models.Model):
+    cod_d = models.AutoField(auto_created = True,
+                  primary_key = True,
+                  serialize = False, 
+                  verbose_name ='ID'
+                )
+    area = models.CharField(max_length=45)
+    curso = models.CharField(max_length=45)
+    nome = models.CharField(max_length=45)
+    assunto = models.CharField(max_length=45)
+    especialidade = models.CharField(max_length=45)
+
 class questao(models.Model):
     cod_q = models.AutoField(auto_created = True,
                   primary_key = True,
@@ -11,16 +23,21 @@ class questao(models.Model):
                   verbose_name ='ID'
                 )
     enunciado = models.TextField()
-    alt_a = models.TextField()
-    alt_b = models.TextField()
-    alt_c = models.TextField()
-    alt_d = models.TextField()
-    alt_e = models.TextField()
-    gabarito = models.CharField(max_length=1)
+    banca = models.CharField(max_length=45)
+    ano = models.CharField(max_length=45)
 
     def __str__(self):
         return str(self.cod_q)
 
+class questao_alternativa(models.Model):
+    cod_qa = models.OneToOneField(questao, on_delete=models.CASCADE)
+    a = models.TextField()
+    b = models.TextField()
+    c = models.TextField()
+    d = models.TextField()
+    e = models.TextField()
+    gabarito = models.CharField(max_length=1)
+    
 class questao_parametro(models.Model):
     cod_qp = models.OneToOneField(questao, on_delete=models.CASCADE)
     a = models.FloatField()
@@ -29,18 +46,6 @@ class questao_parametro(models.Model):
 
     def __str__(self):
         return str(self.cod_qp)
-
-class questao_catacteristica(models.Model):
-    cod_qc = models.ForeignKey(questao, on_delete=models.CASCADE, default=None, related_name='fk')
-    curso = models.CharField(max_length=45)
-    banca = models.CharField(max_length=45)
-    disciplina = models.CharField(max_length=45)
-    assunto = models.CharField(max_length=45)
-    ano = models.IntegerField()
-
-    def __str__(self):
-        return str(self.cod_qc)
-
 
 
 class teta_usuario(models.Model):

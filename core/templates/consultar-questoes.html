@@ -1,16 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <script type="text/javascript" src="{% static 'js/tree.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/treeitem.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/treeClick.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'js/tree.css'%}"/>
+    
+    <script>document.getElementsByTagName("html")[0].className += " js";</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <title>Questoes de Exatas</title>
 
     
-    <title>Questoes de Exatas</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+   
   </head>
   <body class=" ">
     <div class="container " >
@@ -38,13 +48,383 @@
         <a class="nav-link text-white" href="#">Meu Perfil</a>
       </nav>
      
+      {{diretorios}}
+ 
+      <div class="card my-2" style="width: 40rem;">
+        <div class="card-body">
+          <h5 class="card-title">Ciência da Computação</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Questões disponiveis: 439</h6>
+          
+          <ul role="tree" aria-labelledby="tree_label">
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                Algebra Linear
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                 Matrizes
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  Determinantes
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  Equações Lineares
+                </li>
 
-      <br><br><br><br><br><br>
-      <h1> Pagina de Consulta </h1>
-      <br><br><br><br><br><br>
-      
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  Espaços vetoriais
+                </li>
+                
+                 <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  Autovalores e Autovetores
+                </li>
+              </li>
+
+            
+               
+            
+            </ul>
+            <li role="treeitem"
+            aria-expanded="false"
+            aria-selected="false">
+          <span>
+            Algoritmos
+          </span>
+          <ul role="group">
+            <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+             Estrutura de controle
+            </li>
+            <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+              Estrutura de Repetição
+            </li>
+            <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+              Vetores
+            </li>
+
+            <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+              Matrizes
+            </li>
+            
+             <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+              Recursividade
+            </li>
+        </li>
+
+            
+
+
+          
+        </div>
+
+
+
+        
+      </div>
+
 
       
+      <ul role="tree" aria-labelledby="tree_label">
+        <li role="treeitem"
+            aria-expanded="false"
+            aria-selected="false">
+          <span>
+            Projects
+          </span>
+          <ul role="group">
+            <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+              project-1.docx
+            </li>
+            <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+              project-2.docx
+            </li>
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                Project 3
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-3A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-3B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-3C.docx
+                </li>
+              </ul>
+            </li>
+            <li role="treeitem"
+                aria-selected="false"
+                class="doc">
+              project-4.docx
+            </li>
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                Project 5
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-5A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-5B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-5C.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-5D.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-5E.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  project-5F.docx
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li role="treeitem"
+            aria-expanded="false"
+            aria-selected="false">
+          <span>
+            Reports
+          </span>
+          <ul role="group">
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                report-1
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-1A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-1B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-1C.docx
+                </li>
+              </ul>
+            </li>
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                report-2
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-2A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-2B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-2C.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-2D.docx
+                </li>
+              </ul>
+            </li>
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                report-3
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-3A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-3B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-3C.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  report-3D.docx
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li role="treeitem"
+            aria-expanded="false"
+            aria-selected="false">
+          <span>
+            Letters
+          </span>
+          <ul role="group">
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                letter-1
+              </span>
+              <ul>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-1A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-1B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-1C.docx
+                </li>
+              </ul>
+            </li>
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                letter-2
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-2A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-2B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-2C.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-2D.docx
+                </li>
+              </ul>
+            </li>
+            <li role="treeitem"
+                aria-expanded="false"
+                aria-selected="false">
+              <span>
+                letter-3
+              </span>
+              <ul role="group">
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-3A.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-3B.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-3C.docx
+                </li>
+                <li role="treeitem"
+                    aria-selected="false"
+                    class="doc">
+                  letter-3D.docx
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p>
+        <label>
+          File or Folder Selected:
+          <input id="last_action"
+                 type="text"
+                 size="15"
+                 readonly="">
+        </label>
+      </p>
 
      
 
