@@ -48,8 +48,26 @@
         <a class="nav-link text-white" href="#">Meu Perfil</a>
       </nav>
      
-      {{diretorios}}
- 
+      {{diretorio}}
+      <br><br><br>
+      <ul role="tree" aria-labelledby="tree_label">
+      
+        {% for curso, disc in diretorio.items %}
+        {{curso}}<br>
+          {% for disciplina, ass in disc.items %}
+                  <p>- {{disciplina}}</p>
+                  {% for assunto in ass %}
+                  <p>+ {{assunto}}</p>
+                  {% endfor %}
+          {% endfor %}
+        {% endfor %}
+     
+
+
+   
+
+      </ul>
+
       <div class="card my-2" style="width: 40rem;">
         <div class="card-body">
           <h5 class="card-title">Ciência da Computação</h5>

@@ -46,12 +46,12 @@ def pag_inicial(request):
     return render(request, 'pagina-inicial.html')
 
 def consultar_questoes(request):
-    diretorios = json.load(open('C:\\Users\\abner\\OneDrive\\Documentos\\questoes-de-exatas\\core\\diretorios.json', encoding='utf8'))
-    print(diretorios)
+    diretorio = json.load(open('C:\\Users\\abner\\OneDrive\\Documentos\\questoes-de-exatas\\core\\diretorios.json', encoding='utf8'))
+    print(diretorio)
     
   
     context = {
-        "diretorios" : diretorios,
+        "diretorio" : diretorio,
     }
 
     return render(request, 'consultar-questoes.html', context)
