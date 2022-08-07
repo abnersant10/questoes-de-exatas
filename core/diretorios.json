@@ -1,8 +1,8 @@
 {
- "Ciência da Computação" :
+ "Sicencia da Computachion" :
   {
-         "Algebra Linear" : ["Matrizes", "Determinantes", "Vetores"],
-         "Geometria Analitica" : ["Rock", "Bruxewta", "Beldade"]
+         "Sistemas Digitais" : ["Cirtuidos", "Mapa de Carnô", "Booleana"],
+         "Compiladores" : ["Rock", "Bruxewta", "Beldade"]
          
   }
 } 
