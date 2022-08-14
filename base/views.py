@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
 from django.contrib.auth import *
 from django.contrib.auth.models import User
-from .models import Questao
+from .models import Questao, Disciplina
 import json
 import pathlib
 
@@ -54,13 +53,14 @@ def consultar_quest(request):
     return render(request, 'consultar.html', context)
 
 
-def nav_quest(request, assunto, disciplina):
-    itens = Questao.objects.all()
-    paginator = Paginator(itens, 1)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    assunto = 'assunto'
-    disciplina = 'disciplina'
+def nav_quest(request, disciplina,assunto,):
+
+    disciplina_selec = Disciplina.objects.filter(nome_disciplina__contains=disciplina)
+    print(disciplina_selec)
+
+
+
+
     context = {
         'assunto' : assunto,
         'disciplina': disciplina,

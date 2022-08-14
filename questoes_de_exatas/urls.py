@@ -10,6 +10,6 @@ urlpatterns = [
     path('consultar-questoes', consultar_quest, name='consultar'),
     path('logout', logout_view, name="logout"),
     #path('nav-quest', nav_quest, name="nav-quest"),
-    path('<str:assunto>/<str:disciplina>', nav_quest),
+    path('<str:disciplina>/<str:assunto>', nav_quest),
 
 ]
