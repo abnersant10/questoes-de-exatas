@@ -24,6 +24,9 @@ class Disciplina(models.Model):
     curso_cod = models.ForeignKey(Curso,on_delete=models.CASCADE)
     area_cod = models.ForeignKey(Area,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.nome_disciplina
+
 
 class Assunto(models.Model):
 
@@ -32,6 +35,9 @@ class Assunto(models.Model):
     disciplina_cod = models.ForeignKey(Disciplina, on_delete=models.CASCADE)
     curso_cod = models.ForeignKey(Curso, on_delete=models.CASCADE)
     area_cod = models.ForeignKey(Area, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.assunto
 
 
 class TetaUsuario(models.Model):

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import *
 from django.contrib.auth.models import User
-from .models import Questao, Disciplina
+from .models import Assunto, Disciplina
 import json
 import pathlib
 
@@ -53,16 +53,17 @@ def consultar_quest(request):
     return render(request, 'consultar.html', context)
 
 
-def nav_quest(request, disciplina,assunto,):
+def nav_quest(request, assunto,disciplina,):
 
-    disciplina_selec = Disciplina.objects.filter(nome_disciplina__contains=disciplina)
-    print(disciplina_selec)
-
+    disciplina = disciplina.replace('-', ' ')
+    assunto = assunto.replace('-', ' ')
+    disciplina_selec = Disciplina.objects.get(nome_disciplina__contains=disciplina)
+    assunto_selec = Assunto.objects.get(assunto__contains=assunto)
 
 
 
     context = {
-        'assunto' : assunto,
-        'disciplina': disciplina,
+        'assunto' : assunto_selec,
+        'disciplina': disciplina_selec,
     }
     return render(request, 'nav-quest.html', context)
