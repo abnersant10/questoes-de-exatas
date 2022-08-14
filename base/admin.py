@@ -4,7 +4,7 @@ from .models import *
 
 class AreaAdmin(admin.ModelAdmin):
 
-    list_display = ('nome_area', 'cod_area')
+    list_display = ('nome_area','cod_area')
 
 
 class CursoAdmin(admin.ModelAdmin):
@@ -39,7 +39,7 @@ class QuestaoAlternativaAdmin(admin.ModelAdmin):
 
 class QuestaoParametroAdmin(admin.ModelAdmin):
 
-    list_display = ('questao_cod', 'A', 'B', 'C')
+    list_display = ('questao_cod', 'A', 'B', 'C','D')
 
 
 admin.site.register(Area, AreaAdmin)

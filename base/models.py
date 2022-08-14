@@ -64,7 +64,8 @@ class QuestaoAlternativa(models.Model):
 
 class QuestaoParametro(models.Model):
 
-    A = models.TextField()
-    B = models.TextField()
-    C = models.TextField()
+    A = models.FloatField()
+    B = models.FloatField()
+    C = models.FloatField()
+    D = models.FloatField(default=1)
     questao_cod = models.OneToOneField(Questao, on_delete=models.CASCADE)

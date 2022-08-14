@@ -60,14 +60,16 @@
                           aria-expanded="false"
                           aria-selected="false">
                       <span>
-                <a href="#" style="text-decoration:none;color: inherit;">{{disciplina}}</a>
+                <a href=# style="text-decoration:none;color: inherit;">{{disciplina}}</a>
               </span>
                       <ul role="group">
                           {% for assunto in ass %}
                               <li role="treeitem"
                                   aria-selected="false"
                                   class="doc">
-                              <a href="#" style="text-decoration:none; color: inherit;">{{assunto}}</a>
+
+                              <a href="{{disciplina|slugify}}/{{assunto|slugify}}" style="text-decoration:none; color: inherit;">{{assunto}}</a>
+
                           {% endfor %}
                           </li>
 
