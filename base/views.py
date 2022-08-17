@@ -64,7 +64,7 @@ def nav_quest(request, assunto,disciplina,):
     itens_select = Questao.objects.filter(assunto_cod='CE01CCAS01')
     itens_param = []
     tot_itens = len(itens_select)
-    teta = 0 # inicialmente
+    teta = -2 # inicialmente
     itens_usados = []
     vetor_respostas = []
     vetor_param = []
@@ -86,8 +86,7 @@ def nav_quest(request, assunto,disciplina,):
 
 
 
-    if tot_itens != 0:
-        print(tot_itens)
+    while tot_itens != 0:
         item = UrrySelector()
         i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
         banca = itens_select[int(i_novo_item)].banca_examinadora
@@ -105,6 +104,7 @@ def nav_quest(request, assunto,disciplina,):
         param_c = QuestaoParametro.objects.get(questao_cod=cod_questao).C
         itens_usados.append((i_novo_item))
         tot_itens = tot_itens - 1
+        print(tot_itens)
 
 
         #id_item_atual = 0
@@ -119,11 +119,18 @@ def nav_quest(request, assunto,disciplina,):
 
     #for item in itens_select:
     #    print(item)
-    #text = request.GET.get('button_text')
-    #print("texto: ", text)
+    text = request.GET.get('button_text')
+    print("texto: ", text)
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         button_text = 196251
-        return JsonResponse({'button_text': button_text}, status=200)
+        outra_saida = 2048
+        return JsonResponse(
+            {'seconds': button_text,
+             'id_enunciado': outra_saida,
+            }
+
+            , status=200
+        )
 
 
     context = {

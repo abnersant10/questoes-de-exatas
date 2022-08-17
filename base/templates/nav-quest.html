@@ -82,8 +82,7 @@
         </li>
 
         <li class="list-group-item">Alternativas
-        <form method="post">
-            {% csrf_token %}
+
         <div class="form-check">
               <input class="form-check-input" type="radio" name="resp" id="flexRadioDefault1 " checked>
               <label class="form-check-label" for="flexRadioDefault1">
@@ -130,13 +129,15 @@
             <div>
                 <p>| Discriminação: {{param_a}} | Dificuldade {{param_b}} | Acerto ao acaso: {{param_c}} |</p>
             </div>
-            <button type="submit" class="btn btn-success"> Responder </button>
+            <button type="button" class="btn btn-success"> GET </button>
             <br>
-            </form>
         </li>
       </ul>
+
     </div>
 
+ <div id="seconds"></div>
+ <div id="id_enunciado"></div>
 
 
 
