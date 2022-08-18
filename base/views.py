@@ -89,9 +89,11 @@ def nav_quest(request, assunto,disciplina,):
 
     item = UrrySelector()
     itens_usados = request.POST.get('id_itens')
-    itens_usados = [int(i) for i in itens_usados.split()]
+    print(itens_usados)
     if itens_usados == None:
         itens_usados = ''
+    itens_usados = [int(i) for i in itens_usados.split()]
+
     #itens_usados = [1]
     print(itens_usados)
     i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
@@ -130,8 +132,8 @@ def nav_quest(request, assunto,disciplina,):
         server_id_items = ''
     if len(itens_usados) < tot_itens:
         itens_usados = " ".join(map(str, itens_usados))
-        server_id_items = itens_usados + ' ' + str(i_novo_item)
-    print(itens_usados)
+        server_id_items = itens_usados + ' ' 
+        print(itens_usados)
 
     context = {
         'assunto' : assunto_select,
