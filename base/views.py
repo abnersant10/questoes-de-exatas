@@ -57,6 +57,7 @@ def consultar_quest(request):
 def nav_quest(request, assunto,disciplina,):
 
 
+    #BUSCA
     disciplina = disciplina.replace('-', ' ')
     assunto = assunto.replace('-', ' ')
     disciplina_select = Disciplina.objects.filter(nome_disciplina__contains=disciplina)
@@ -65,7 +66,7 @@ def nav_quest(request, assunto,disciplina,):
     itens_param = []
     tot_itens = len(itens_select)
     teta = 2 # inicialmente
-    itens_usados = []
+    #itens_usados = []
     vetor_respostas = []
     vetor_param = []
 
@@ -87,7 +88,12 @@ def nav_quest(request, assunto,disciplina,):
 
 
     item = UrrySelector()
-
+    itens_usados = request.POST.get('id_itens')
+    itens_usados = [int(i) for i in itens_usados.split()]
+    if itens_usados == None:
+        itens_usados = ''
+    #itens_usados = [1]
+    print(itens_usados)
     i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
     banca = itens_select[int(i_novo_item)].banca_examinadora
     ano = itens_select[int(i_novo_item)].ano_divulgacao
@@ -118,13 +124,14 @@ def nav_quest(request, assunto,disciplina,):
     # receber e tratar os itens administrados
     #tot_itens = 6
     server_id_items = request.POST.get('server_id_items')
-    itens_usados = request.POST.get('id_itens')
-    if itens_usados == None:
-        itens_usados = ''
+
+
     if server_id_items == None:
         server_id_items = ''
     if len(itens_usados) < tot_itens:
-        server_id_items = itens_usados + str(i_novo_item)
+        itens_usados = " ".join(map(str, itens_usados))
+        server_id_items = itens_usados + ' ' + str(i_novo_item)
+    print(itens_usados)
 
     context = {
         'assunto' : assunto_select,
