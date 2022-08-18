@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import *
 from django.contrib.auth.models import User
 from .models import Assunto, Disciplina, Questao, QuestaoAlternativa, QuestaoParametro
-from django.http import JsonResponse
 import json
 import pathlib
 from catsim.selection import UrrySelector
@@ -70,8 +69,6 @@ def nav_quest(request, assunto,disciplina,):
     vetor_respostas = []
     vetor_param = []
 
-
-
     for item in itens_select:
         a = QuestaoParametro.objects.get(questao_cod=item.cod_questao).A
         b = QuestaoParametro.objects.get(questao_cod=item.cod_questao).B
@@ -88,39 +85,46 @@ def nav_quest(request, assunto,disciplina,):
 
 
 
-    if tot_itens != 0:
-        item = UrrySelector()
-        i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
-        banca = itens_select[int(i_novo_item)].banca_examinadora
-        ano = itens_select[int(i_novo_item)].ano_divulgacao
-        enunciado = itens_select[int(i_novo_item)].enunciado
-        cod_questao = itens_select[int(i_novo_item)].cod_questao
-        alt_a = QuestaoAlternativa.objects.get(questao_cod=cod_questao).A
-        alt_b = QuestaoAlternativa.objects.get(questao_cod=cod_questao).B
-        alt_c = QuestaoAlternativa.objects.get(questao_cod=cod_questao).C
-        alt_d = QuestaoAlternativa.objects.get(questao_cod=cod_questao).D
-        alt_e = QuestaoAlternativa.objects.get(questao_cod=cod_questao).E
-        gabarito = QuestaoAlternativa.objects.get(questao_cod=cod_questao).gabarito
-        param_a = QuestaoParametro.objects.get(questao_cod=cod_questao).A
-        param_b = QuestaoParametro.objects.get(questao_cod=cod_questao).B
-        param_c = QuestaoParametro.objects.get(questao_cod=cod_questao).C
-        itens_usados.append((i_novo_item))
-        tot_itens = tot_itens - 1
-        print(tot_itens)
+
+    item = UrrySelector()
+
+    i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
+    banca = itens_select[int(i_novo_item)].banca_examinadora
+    ano = itens_select[int(i_novo_item)].ano_divulgacao
+    enunciado = itens_select[int(i_novo_item)].enunciado
+    cod_questao = itens_select[int(i_novo_item)].cod_questao
+    alt_a = QuestaoAlternativa.objects.get(questao_cod=cod_questao).A
+    alt_b = QuestaoAlternativa.objects.get(questao_cod=cod_questao).B
+    alt_c = QuestaoAlternativa.objects.get(questao_cod=cod_questao).C
+    alt_d = QuestaoAlternativa.objects.get(questao_cod=cod_questao).D
+    alt_e = QuestaoAlternativa.objects.get(questao_cod=cod_questao).E
+    gabarito = QuestaoAlternativa.objects.get(questao_cod=cod_questao).gabarito
+    param_a = QuestaoParametro.objects.get(questao_cod=cod_questao).A
+    param_b = QuestaoParametro.objects.get(questao_cod=cod_questao).B
+    param_c = QuestaoParametro.objects.get(questao_cod=cod_questao).C
+    itens_usados.append((i_novo_item))
 
 
-        user_resp = request.POST.get('user_resp')
-        print(user_resp)
-        server_vet_resp = request.POST.get('vet_resp')
-        if server_vet_resp == None:
-            server_vet_resp = ''
-        if user_resp == gabarito:
-            server_vet_resp=server_vet_resp+'1'
-            print(type(server_vet_resp), server_vet_resp)
-        elif user_resp != None:
-            server_vet_resp = server_vet_resp + '0'
-            print(type(server_vet_resp), server_vet_resp)
+    # receber e tratar os dados do vetor respostas
+    user_resp = request.POST.get('user_resp')
+    server_vet_resp = request.POST.get('vet_resp')
+    if server_vet_resp == None:
+        server_vet_resp = ''
+    if user_resp == gabarito:
+        server_vet_resp = server_vet_resp + '1'
+    elif user_resp != None:
+        server_vet_resp = server_vet_resp + '0'
 
+    # receber e tratar os itens administrados
+    #tot_itens = 6
+    server_id_items = request.POST.get('server_id_items')
+    itens_usados = request.POST.get('id_itens')
+    if itens_usados == None:
+        itens_usados = ''
+    if server_id_items == None:
+        server_id_items = ''
+    if len(itens_usados) < tot_itens:
+        server_id_items = itens_usados + str(i_novo_item)
 
     context = {
         'assunto' : assunto_select,
@@ -140,6 +144,7 @@ def nav_quest(request, assunto,disciplina,):
         'param_c': param_c,
         'teta': teta,
         'server_vet_resp': server_vet_resp,
+        'server_id_items' : server_id_items,
 
     }
     return render(request, 'nav-quest.html', context)
