@@ -57,6 +57,7 @@ def consultar_quest(request):
 
 def nav_quest(request, assunto,disciplina,):
 
+
     disciplina = disciplina.replace('-', ' ')
     assunto = assunto.replace('-', ' ')
     disciplina_select = Disciplina.objects.filter(nome_disciplina__contains=disciplina)
@@ -64,10 +65,11 @@ def nav_quest(request, assunto,disciplina,):
     itens_select = Questao.objects.filter(assunto_cod='CE01CCAS01')
     itens_param = []
     tot_itens = len(itens_select)
-    teta = -2 # inicialmente
+    teta = 2 # inicialmente
     itens_usados = []
     vetor_respostas = []
     vetor_param = []
+
 
 
     for item in itens_select:
@@ -86,7 +88,7 @@ def nav_quest(request, assunto,disciplina,):
 
 
 
-    while tot_itens != 0:
+    if tot_itens != 0:
         item = UrrySelector()
         i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
         banca = itens_select[int(i_novo_item)].banca_examinadora
@@ -107,30 +109,17 @@ def nav_quest(request, assunto,disciplina,):
         print(tot_itens)
 
 
-        #id_item_atual = 0
-        #print("ID Novo item: ", i_novo_item)
-        #print(itens_select[int(i_novo_item)])
-        # ADMINISTRAR O ITEM I
-
-
-
-
-
-
-    #for item in itens_select:
-    #    print(item)
-    text = request.GET.get('button_text')
-    print("texto: ", text)
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        button_text = 196251
-        outra_saida = 2048
-        return JsonResponse(
-            {'seconds': button_text,
-             'id_enunciado': outra_saida,
-            }
-
-            , status=200
-        )
+        user_resp = request.POST.get('user_resp')
+        print(user_resp)
+        server_vet_resp = request.POST.get('vet_resp')
+        if server_vet_resp == None:
+            server_vet_resp = ''
+        if user_resp == gabarito:
+            server_vet_resp=server_vet_resp+'1'
+            print(type(server_vet_resp), server_vet_resp)
+        elif user_resp != None:
+            server_vet_resp = server_vet_resp + '0'
+            print(type(server_vet_resp), server_vet_resp)
 
 
     context = {
@@ -150,5 +139,7 @@ def nav_quest(request, assunto,disciplina,):
         'param_b': param_b,
         'param_c': param_c,
         'teta': teta,
+        'server_vet_resp': server_vet_resp,
+
     }
     return render(request, 'nav-quest.html', context)
