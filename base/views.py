@@ -34,8 +34,10 @@ def cadastro(request):
         sobrenome = str(request.POST.get('sobrenome'))
         email = str(request.POST.get('email'))
         senha = str(request.POST.get('senha'))
-        User.objects.create_user(
-            username=email, first_name=nome, last_name=sobrenome, password=senha)
+        user = User.objects.create_user(
+            username=email, first_name=nome, last_name=sobrenome, password=senha, is_staff=True)
+        user.save()
+
     return render(request, 'cadastro.html')
 
 
@@ -58,8 +60,6 @@ def nav_quest(request, assunto,disciplina,):
 
     if request.user.is_authenticated:
         #BUSCA
-        cod_assunto = 'CE01CCAS01'
-        #cod_disciplina = 'A01CCDS01'
         cod_assunto = Assunto(cod_assunto='CE01CCAS01')
         cod_disciplina = Disciplina(cod_disciplina='A01CCDS01')
         disciplina = disciplina.replace('-', ' ')
@@ -69,21 +69,22 @@ def nav_quest(request, assunto,disciplina,):
         itens_select = Questao.objects.filter(assunto_cod=cod_assunto)
         itens_param = []
         tot_itens = len(itens_select)
+        servidor_est = 0
+        cliente_est = 0
 
         teta_usuario = TetaUsuario.objects.filter(assunto_cod=cod_assunto)
         if teta_usuario.count() == 0:
             email = User.objects.get(username=request.user.username)
-            print(type(email), email)
-            x = TetaUsuario.objects.create(teta=0.0, usuario=email, disciplina_cod=cod_disciplina, assunto_cod=cod_assunto)
-            x.save()
-            # criar um teta para este usuario igual a 0
-            #for i in teta_usuario:
-            #    print(i.teta)
-        #if teta_usuario == None:
+            novo_teta_usuario = TetaUsuario.objects.create(teta=0.0, usuario=email, disciplina_cod=cod_disciplina, assunto_cod=cod_assunto)
+            novo_teta_usuario.save()
+
+        for i in teta_usuario:
+            teta = i.teta
 
 
 
-        teta = 2 # inicialmente
+
+
         #itens_usados = []
         vetor_respostas = []
         vetor_param = []
@@ -99,7 +100,7 @@ def nav_quest(request, assunto,disciplina,):
             param_i.append(c)
             param_i.append(d)
             vetor_param.append((param_i))
-            #print(vetor_param)
+
         vetor_param = array(vetor_param)
 
 
@@ -107,13 +108,12 @@ def nav_quest(request, assunto,disciplina,):
 
         item = UrrySelector()
         itens_usados = request.POST.get('id_itens')
-        print(itens_usados)
+
         if itens_usados == None:
             itens_usados = ''
         itens_usados = [int(i) for i in itens_usados.split()]
 
-        #itens_usados = [1]
-        print(itens_usados)
+
         i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
         banca = itens_select[int(i_novo_item)].banca_examinadora
         ano = itens_select[int(i_novo_item)].ano_divulgacao
@@ -151,7 +151,9 @@ def nav_quest(request, assunto,disciplina,):
         if len(itens_usados) < tot_itens:
             itens_usados = " ".join(map(str, itens_usados))
             server_id_items = itens_usados + ' '
-            print(itens_usados)
+            # criterio de parada (Encerrar o teste)
+
+
 
         context = {
             'assunto' : assunto_select,
