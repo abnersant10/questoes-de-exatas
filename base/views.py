@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import *
 from django.contrib.auth.models import User
-from .models import Assunto, Disciplina, Questao, QuestaoAlternativa, QuestaoParametro
+from .models import Assunto, Disciplina, Questao, QuestaoAlternativa, QuestaoParametro, TetaUsuario
 import json
 import pathlib
 from catsim.selection import UrrySelector
@@ -58,13 +58,31 @@ def nav_quest(request, assunto,disciplina,):
 
     if request.user.is_authenticated:
         #BUSCA
+        cod_assunto = 'CE01CCAS01'
+        #cod_disciplina = 'A01CCDS01'
+        cod_assunto = Assunto(cod_assunto='CE01CCAS01')
+        cod_disciplina = Disciplina(cod_disciplina='A01CCDS01')
         disciplina = disciplina.replace('-', ' ')
         assunto = assunto.replace('-', ' ')
         disciplina_select = Disciplina.objects.filter(nome_disciplina__contains=disciplina)
         assunto_select = Assunto.objects.filter(assunto__contains=assunto)
-        itens_select = Questao.objects.filter(assunto_cod='CE01CCAS01')
+        itens_select = Questao.objects.filter(assunto_cod=cod_assunto)
         itens_param = []
         tot_itens = len(itens_select)
+
+        teta_usuario = TetaUsuario.objects.filter(assunto_cod=cod_assunto)
+        if teta_usuario.count() == 0:
+            email = User.objects.get(username=request.user.username)
+            print(type(email), email)
+            x = TetaUsuario.objects.create(teta=0.0, usuario=email, disciplina_cod=cod_disciplina, assunto_cod=cod_assunto)
+            x.save()
+            # criar um teta para este usuario igual a 0
+            #for i in teta_usuario:
+            #    print(i.teta)
+        #if teta_usuario == None:
+
+
+
         teta = 2 # inicialmente
         #itens_usados = []
         vetor_respostas = []
