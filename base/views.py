@@ -139,6 +139,13 @@ def nav_quest(request, assunto, disciplina, ):
         elif user_resp is not None:
             server_vet_resp = server_vet_resp + '0'
 
+        vet_resp = []
+        for i in server_vet_resp:
+            if i == '1':
+                vet_resp.append(True)
+            elif i == '0':
+                vet_resp.append(False)
+
         if isinstance(itens_usados, list):
             return HttpResponse("Não há mais questões disponíveis")
         else:
@@ -150,23 +157,20 @@ def nav_quest(request, assunto, disciplina, ):
         if int(cliente_est) >= 0:
             cliente_est = int(cliente_est) + 1
         print(cliente_est, '==', interval_est)
+
         if int(cliente_est)  == interval_est:
             # estimar o novo teta
 
-            vet_resp = []
-            for i in server_vet_resp:
-                if i == '1':
-                    vet_resp.append(True)
-                else:
-                    vet_resp.append(False)
+
+
 
             items_administrados = [int(i) for i in server_id_items.split()]
             items_administrados.pop()
             log_likelihood = NumericalSearchEstimator()
-            print("itens administrados:", itens_usados)
+            print("itens administrados:", items_administrados)
             print("vetor de resposta:", vet_resp)
             novo_teta = NumericalSearchEstimator.estimate(log_likelihood, items=vetor_param,
-                                                          administered_items=itens_usados, response_vector=vet_resp,
+                                                          administered_items=items_administrados, response_vector=vet_resp,
                                                           est_theta=teta)
 
             email = User.objects.get(username=request.user.username)

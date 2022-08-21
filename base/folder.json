@@ -1,6 +1,8 @@
 {
  "Ciência da Computação" :
   {
+
+
        "Disciplina" : ["Assunto"],
        "Álgebra Linear" : ["Matrizes","Determinantes", "Sistemas Lineares", "Espaços Vetoriais", "Base e Dimensão", "Transformações Lineares"],
        "Algoritmos" : ["Estruturas de Controle", "Estruturas de Repetição", "Estrutura de dados homogêneas", "Estrutura de dados heterogêneas", "Recursividade"],
