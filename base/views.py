@@ -1,4 +1,3 @@
-import catsim.estimation
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import *
 from django.contrib.auth.models import User
@@ -65,12 +64,10 @@ def nav_quest(request, assunto, disciplina, ):
         disciplina_select = Disciplina.objects.filter(nome_disciplina__contains=disciplina)
         assunto_select = Assunto.objects.filter(assunto__contains=assunto)
         itens_select = Questao.objects.filter(assunto_cod=cod_assunto)
-        itens_param = []
         tot_itens = len(itens_select)
         interval_est = 3
-
-
         teta_usuario = TetaUsuario.objects.filter(assunto_cod=cod_assunto)
+        teta = 0
         if teta_usuario.count() == 0:
             email = User.objects.get(username=request.user.username)
             novo_teta_usuario = TetaUsuario.objects.create(teta=0.0, usuario=email, disciplina_cod=cod_disciplina,
@@ -80,8 +77,6 @@ def nav_quest(request, assunto, disciplina, ):
         for i in teta_usuario:
             teta = i.teta
 
-        # itens_usados = []
-        vetor_respostas = []
         vetor_param = []
 
         for item in itens_select:
@@ -89,19 +84,15 @@ def nav_quest(request, assunto, disciplina, ):
             b = QuestaoParametro.objects.get(questao_cod=item.cod_questao).B
             c = QuestaoParametro.objects.get(questao_cod=item.cod_questao).C
             d = QuestaoParametro.objects.get(questao_cod=item.cod_questao).D
-            param_i = []
-            param_i.append(a)
-            param_i.append(b)
-            param_i.append(c)
-            param_i.append(d)
-            vetor_param.append((param_i))
+            param_i = [a, b, c, d]
+            vetor_param.append(param_i)
 
         vetor_param = array(vetor_param)
 
         item = UrrySelector()
         itens_usados = request.POST.get('id_itens')
 
-        if itens_usados == None:
+        if itens_usados is None:
             itens_usados = ''
         itens_usados = [int(i) for i in itens_usados.split()]
 
@@ -119,11 +110,11 @@ def nav_quest(request, assunto, disciplina, ):
         param_a = QuestaoParametro.objects.get(questao_cod=cod_questao).A
         param_b = QuestaoParametro.objects.get(questao_cod=cod_questao).B
         param_c = QuestaoParametro.objects.get(questao_cod=cod_questao).C
-        itens_usados.append((i_novo_item))
+        itens_usados.append(i_novo_item)
 
         server_id_items = request.POST.get('server_id_items')
 
-        if server_id_items == None:
+        if server_id_items is None:
             server_id_items = ''
 
         if len(itens_usados) < tot_itens:
@@ -132,38 +123,23 @@ def nav_quest(request, assunto, disciplina, ):
         # receber e tratar os dados do vetor respostas
         user_resp = request.POST.get('user_resp')
         server_vet_resp = request.POST.get('vet_resp')
-        if server_vet_resp == None:
+        if server_vet_resp is None:
             server_vet_resp = ''
         if user_resp == gabarito:
             server_vet_resp = server_vet_resp + '1'
-        elif user_resp != None:
+        elif user_resp is not None:
             server_vet_resp = server_vet_resp + '0'
 
-        # receber e tratar os itens administrados
-        # tot_itens = 6
-
-
-
         if isinstance(itens_usados, list):
-            return HttpResponse("NÃO HÁ MAIS QUESTOES DISPONIVEIS")
+            return HttpResponse("Não há mais questões disponíveis")
         else:
             itens_usados = [int(i) for i in itens_usados.split()]
 
-
-
-
-
-
-
-
-
-
         cliente_est = request.POST.get('cli_est')
-        if cliente_est == None:
+        if cliente_est is None:
             cliente_est = 0
         if int(cliente_est) >= 0:
             cliente_est = int(cliente_est) + 1
-
 
         if len(server_vet_resp) == interval_est:
             # estimar o novo teta
@@ -175,12 +151,12 @@ def nav_quest(request, assunto, disciplina, ):
                 else:
                     vet_resp.append(False)
 
-
             items_administrados = [int(i) for i in server_id_items.split()]
             items_administrados.pop()
             log_likelihood = NumericalSearchEstimator()
-            novo_teta = NumericalSearchEstimator.estimate(log_likelihood, items=vetor_param, administered_items=itens_usados, response_vector=vet_resp, est_theta=teta)
-            print('novo_teta: ', novo_teta)
+            novo_teta = NumericalSearchEstimator.estimate(log_likelihood, items=vetor_param,
+                                                          administered_items=itens_usados, response_vector=vet_resp,
+                                                          est_theta=teta)
 
             email = User.objects.get(username=request.user.username)
             novo_teta_usuario = TetaUsuario.objects.create(teta=novo_teta, usuario=email, disciplina_cod=cod_disciplina,
