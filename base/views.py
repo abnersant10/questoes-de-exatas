@@ -121,6 +121,14 @@ def nav_quest(request, assunto, disciplina, ):
         param_c = QuestaoParametro.objects.get(questao_cod=cod_questao).C
         itens_usados.append((i_novo_item))
 
+        server_id_items = request.POST.get('server_id_items')
+
+        if server_id_items == None:
+            server_id_items = ''
+
+        if len(itens_usados) < tot_itens:
+            itens_usados = " ".join(map(str, itens_usados))
+            server_id_items = itens_usados + ' '
         # receber e tratar os dados do vetor respostas
         user_resp = request.POST.get('user_resp')
         server_vet_resp = request.POST.get('vet_resp')
@@ -133,21 +141,14 @@ def nav_quest(request, assunto, disciplina, ):
 
         # receber e tratar os itens administrados
         # tot_itens = 6
-        server_id_items = request.POST.get('server_id_items')
 
-        if server_id_items == None:
-            server_id_items = ''
-        print(len(itens_usados), '<' , tot_itens)
-        if len(itens_usados) < tot_itens:
-            itens_usados = " ".join(map(str, itens_usados))
-            server_id_items = itens_usados + ' '
 
 
         if isinstance(itens_usados, list):
             return HttpResponse("NÃO HÁ MAIS QUESTOES DISPONIVEIS")
         else:
             itens_usados = [int(i) for i in itens_usados.split()]
-            print(len(itens_usados), itens_usados)
+
 
 
 
@@ -163,10 +164,10 @@ def nav_quest(request, assunto, disciplina, ):
         if int(cliente_est) >= 0:
             cliente_est = int(cliente_est) + 1
 
-        print("len(vetor_resposta)", len(server_vet_resp))
+
         if len(server_vet_resp) == interval_est:
             # estimar o novo teta
-            log_likelihood = NumericalSearchEstimator()
+
             vet_resp = []
             for i in server_vet_resp:
                 if i == '1':
@@ -175,15 +176,16 @@ def nav_quest(request, assunto, disciplina, ):
                     vet_resp.append(False)
 
 
-            items_param = [int(i) for i in server_id_items.split()]
-            itens_administrados = []
-            for i in items_param:
-                itens_administrados.append(list(vetor_param[i]))
-            print("itens administrados ", itens_administrados)
-            print("vetor_resposta: ", vet_resp)
-            novo_teta = 0
-            novo_teta = NumericalSearchEstimator(log_likelihood, items=itens_administrados, administered_items=vet_resp, est_theta=0)
+            items_administrados = [int(i) for i in server_id_items.split()]
+            items_administrados.pop()
+            log_likelihood = NumericalSearchEstimator()
+            novo_teta = NumericalSearchEstimator.estimate(log_likelihood, items=vetor_param, administered_items=itens_usados, response_vector=vet_resp, est_theta=teta)
             print('novo_teta: ', novo_teta)
+
+            email = User.objects.get(username=request.user.username)
+            novo_teta_usuario = TetaUsuario.objects.create(teta=novo_teta, usuario=email, disciplina_cod=cod_disciplina,
+                                                           assunto_cod=cod_assunto)
+            novo_teta_usuario.save()
             cliente_est = 0
 
         # a cada 5 questões zerar
