@@ -42,10 +42,19 @@ def cadastro(request):
 
 
 def pag_inicial(request):
-    return render(request, 'pagina-inicial.html')
+    if request.user.is_authenticated:
+        frist_name = request.user.first_name
+        print(frist_name)
+        context = {
+            "frist_name": frist_name,
+        }
+        return render(request, 'pagina-inicial.html', context)
+    else:
+        return redirect('home')
 
 
 def consultar_quest(request):
+
     folder = json.load(
         open(str(pathlib.Path().resolve()) + '\\base\\folder.json', encoding='utf8'))
     context = {
@@ -65,7 +74,7 @@ def nav_quest(request, assunto, disciplina, ):
         assunto_select = Assunto.objects.filter(assunto__contains=assunto)
         itens_select = Questao.objects.filter(assunto_cod=cod_assunto)
         tot_itens = len(itens_select)
-        interval_est = 3
+        interval_est = 2
         teta_usuario = TetaUsuario.objects.filter(assunto_cod=cod_assunto)
         teta = 0
         if teta_usuario.count() == 0:
@@ -140,8 +149,8 @@ def nav_quest(request, assunto, disciplina, ):
             cliente_est = 0
         if int(cliente_est) >= 0:
             cliente_est = int(cliente_est) + 1
-
-        if len(server_vet_resp) == interval_est:
+        print(cliente_est, '==', interval_est)
+        if int(cliente_est)  == interval_est:
             # estimar o novo teta
 
             vet_resp = []
@@ -154,6 +163,8 @@ def nav_quest(request, assunto, disciplina, ):
             items_administrados = [int(i) for i in server_id_items.split()]
             items_administrados.pop()
             log_likelihood = NumericalSearchEstimator()
+            print("itens administrados:", itens_usados)
+            print("vetor de resposta:", vet_resp)
             novo_teta = NumericalSearchEstimator.estimate(log_likelihood, items=vetor_param,
                                                           administered_items=itens_usados, response_vector=vet_resp,
                                                           est_theta=teta)

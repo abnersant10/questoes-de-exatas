@@ -38,13 +38,12 @@
                       <a class="nav-link" href="#">Bem vindo : Abner </a>
                   </li>
                   <a href="{% url 'logout' %}" class=" btn btn-outline-secondary ">Sair</a>
-                  </li>
               </ul>
           </form>
       </nav>
 
       <nav class="nav" style="background-color: #6C757D;">
-          <a class="nav-link text-white" href="#">Consultar Questões</a>
+          <a class="nav-link text-white" href="{% url 'consultar' %}"> Consultar Questões</a>
           <a class="nav-link text-white" href="#">Cadastrar Questões</a>
           <a class="nav-link text-white" href="#">Consultar Gráficos</a>
           <a class="nav-link text-white" href="#">Meu Perfil</a>
@@ -55,20 +54,20 @@
       <div class="card-header">
           <div class="row">
               <div class="col-5">
-                  <p> Disciplina:
+                  <p> <b>Disciplina:</b>
                    {% for ds in disciplina %}
                      {{ ds }}
                     {% endfor %}
                   </p>
-                  <p> Assunto:
-                  {% for as in assunto %}
-                     {{as}}
+                  <p> <b>Assunto: </b>
+                  {% for ass in assunto %}
+                     {{ass}}
                   {% endfor %}
                   </p>
               </div>
               <div class="col-3">
-                  <p>Banca: {{banca}} </p>
-                  <p>Ano: {{ano}}</p>
+                  <p><b>Banca:</b> {{banca}} </p>
+                  <p><b>Ano:</b> {{ano}}</p>
               </div>
 
 
@@ -79,34 +78,45 @@
       <form method="post">
           {%csrf_token%}
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Enunciado:
-                <div> {{enunciado}}</div>
+        <li class="list-group-item"> <p><b>Enunciado:</b></p>
+                <p> {{enunciado}}</p>
         </li>
 
-        <li class="list-group-item">Alternativas
-            <div class="py-1">
-                <input  class="form-check-input" type="radio" name="user_resp" value="A" required>
-                <label class="form-check-label" >(A) {{alt_a}}</label>
+        <li class="list-group-item">
+            <p><b>Alternativas</b></p>
+            <div class="py-2">
+                <label>
+                    <input  class="form-check-input" type="radio" name="user_resp" value="A" required, checked>
+                </label>
+                <b>(A)</b> {{alt_a}}
             </div>
 
-            <div class="py-1">
-                <input class="form-check-input" type="radio" name="user_resp" value="B">
-                <label class="form-check-label">(B) {{alt_b}}</label>
-            </div >
-
-            <div class="py-1">
-                <input class="form-check-input" type="radio" name="user_resp" value="C">
-                <label class="form-check-label">(C) {{alt_c}}</label>
+            <div class="py-2">
+                <label>
+                    <input class="form-check-input" type="radio" name="user_resp" value="B">
+                </label>
+                <b>(B)</b> {{alt_b}}
             </div>
 
-            <div class="py-1">
-                <input  class="form-check-input" type="radio" name="user_resp" value="D">
-                <label class="form-check-label">(D) {{alt_d}}</label>
+            <div class="py-2">
+                <label>
+                    <input class="form-check-input" type="radio" name="user_resp" value="C">
+                </label>
+                <b>(C)</b> {{alt_c}}
             </div>
 
-            <div class="py-1">
-                <input  class="form-check-input" type="radio" name="user_resp" value="E">
-                <label class="form-check-label">(E) {{alt_e}}</label>
+            <div class="py-2">
+                <label>
+                    <input  class="form-check-input" type="radio" name="user_resp" value="D">
+                </label>
+                <b>(D)</b> {{alt_d}}
+            </div>
+
+            <div class="py-2">
+                <label>
+                    <input  class="form-check-input" type="radio" name="user_resp" value="E">
+                </label>
+                <b>(E)</b> {{alt_e}}
             </div>
 
 
@@ -122,7 +132,7 @@
             <div>
                 <p>| Discriminação: {{param_a}} | Dificuldade {{param_b}} | Acerto ao acaso: {{param_c}} |</p>
             </div>
-            <button type="submit" class="btn btn-success"> GET </button>
+            <button type="submit" class="btn btn-success"> Responder </button>
             <br>
         </li>
 

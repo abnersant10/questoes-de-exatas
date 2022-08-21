@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/html">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="static/css/style.css" />
   </head>
-  <body class=" ">
+  <body>
     <div class="container " >
       <nav class="navbar navbar-expand-lg navbar-dark p-3 " style="background-color: #0a4275;">
         <a class="navbar-brand" href="#">Questões de Exatas</a>
@@ -45,14 +45,13 @@
           <div class="col-6 ">
             <br><br>
             <div class="col-6">
-              <form method="post">
+            <form method="post">
                 {% csrf_token %}
               <input type="text" class="form-control my-2" placeholder="E-mail" name='email' >
               <input type="password" class="form-control my-2" placeholder="Senha" name='senha'>
-            </div>
+
               <button type="submit" class="btn btn-primary ">Entrar</button>
               <a class="btn btn-success " href="{% url 'cadastro' %}" role="button">Criar nova conta</a>
-              
             </form>
               <div>
                 <a href="#" class="">Esqueceu a senha?</a>
@@ -65,29 +64,25 @@
       
 
     <!-- Footer -->
-  <footer class="text-center text-white" style="background-color: #0a4275;">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0">
-      <!-- Section: CTA -->
-      <section class="">
-        <p class="d-flex justify-content-center align-items-center">
-          <span class="me-3">Aprenda mais rápido, pratique exercícios de forma adaptativa! </span>
-        </p>
-      </section>
-      <!-- Section: CTA -->
-    </div>
-    <!-- Grid container -->
+    <footer class="text-center text-white" style="background-color: #0a4275;">
+      <!-- Grid container -->
+      <div class="container p-4 pb-0">
+        <!-- Section: CTA -->
+        <section class="">
+          <p class="d-flex justify-content-center align-items-center">
+              <span class="me-3">Aprenda mais rápido, pratique exercícios de forma adaptativa! </span>
+            </p>
+          </section>
+          <!-- Section: CTA -->
+        </div>
+        <!-- Grid container -->
 
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2020 Todos os direitos reservados :
-      <a class="text-white" href="#">Questões de Exatas</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2020 Todos os direitos reservados :
+          <a class="text-white" href="#">Questões de Exatas</a>
+        </div>
+      </footer>
 
-
-
-  </body>
+</body>
 </html>
