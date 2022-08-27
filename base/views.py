@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import *
 from django.contrib.auth.models import User
+from django.contrib import messages
 from .models import Assunto, Disciplina, Questao, QuestaoAlternativa, QuestaoParametro, TetaUsuario
 import json
 import pathlib
@@ -69,11 +70,12 @@ def nav_quest(request, assunto, disciplina, ):
         cod_disciplina = Disciplina(cod_disciplina='A01CCDS01')
         disciplina = disciplina.replace('-', ' ')
         assunto = assunto.replace('-', ' ')
+        desativar = ''
         disciplina_select = Disciplina.objects.filter(nome_disciplina__contains=disciplina)
         assunto_select = Assunto.objects.filter(assunto__contains=assunto)
         itens_select = Questao.objects.filter(assunto_cod=cod_assunto)
         tot_itens = len(itens_select)
-        interval_est = 3
+        interval_est = 5
         teta_usuario = TetaUsuario.objects.filter(assunto_cod=cod_assunto)
         teta = 0
         if teta_usuario.count() == 0:
@@ -104,6 +106,21 @@ def nav_quest(request, assunto, disciplina, ):
 
         item = UrrySelector()
         i_novo_item = item.select(items=vetor_param, administered_items=itens_usados, est_theta=teta)
+
+
+        print("Item selecionado atualmente", i_novo_item)
+
+        if i_novo_item == None:
+            context = {
+                'assunto': assunto_select,
+                'disciplina': disciplina_select,
+                'itens_selec': itens_select,
+                'teta': teta,
+
+                'desativar': desativar
+            }
+            return render(request, 'nav-quest.html', context)
+
         banca = itens_select[int(i_novo_item)].banca_examinadora
         ano = itens_select[int(i_novo_item)].ano_divulgacao
         enunciado = itens_select[int(i_novo_item)].enunciado
@@ -125,9 +142,12 @@ def nav_quest(request, assunto, disciplina, ):
         if server_vet_resp is None:
             server_vet_resp = ''
         if user_resp == gabarito:
+            messages.success(request, 'Você ACERTOU a questão anterior!')
             server_vet_resp = server_vet_resp + '1'
         if user_resp is not gabarito and user_resp is not None:
+            messages.error(request, 'Você errou a questão anterior!')
             server_vet_resp = server_vet_resp + '0'
+
 
         vet_resp = []
         for i in server_vet_resp:
@@ -143,23 +163,25 @@ def nav_quest(request, assunto, disciplina, ):
         if int(cliente_est) >= 0:
             cliente_est = int(cliente_est) + 1
 
-
-
         server_id_items = request.POST.get('server_id_items')
 
         if server_id_items is None:
             server_id_items = ''
 
-        if len(itens_usados) < tot_itens:
+        if len(itens_usados) <= tot_itens:
             itens_usados = " ".join(map(str, itens_usados))
             server_id_items = itens_usados + ' '
-
-        if int(cliente_est) == interval_est:
-
+        print("server_ID_ITEMS :"
+              "",server_id_items)
+        if int(cliente_est) > interval_est:
+            print("nova estimacao: ", cliente_est,' == ', interval_est)
             items_administrados = [int(i) for i in server_id_items.split()]
-            items_administrados.pop()
+            print((items_administrados))
+            print(vet_resp)
+            #items_administrados.pop()
             try:
                 log_likelihood = NumericalSearchEstimator()
+                ultimo = items_administrados.pop()
                 novo_teta = NumericalSearchEstimator.estimate(log_likelihood, items=vetor_param,
                                                               administered_items=items_administrados,
                                                               response_vector=vet_resp,
@@ -170,9 +192,11 @@ def nav_quest(request, assunto, disciplina, ):
                                                                disciplina_cod=cod_disciplina,
                                                                assunto_cod=cod_assunto)
                 novo_teta_usuario.save()
-                cliente_est = 0
+                cliente_est = 1
+                items_administrados.append(ultimo)
             except:
-                pass
+                messages.error(request, 'Não há mais questões disponíveis')
+                desativar = 'disabled'
                 # o teste vai parar aqui não deixar a continuar
 
         context = {
@@ -195,7 +219,12 @@ def nav_quest(request, assunto, disciplina, ):
             'server_vet_resp': server_vet_resp,
             'server_id_items': server_id_items,
             'server_cli_est': cliente_est,
+            'desativar' : desativar
         }
         return render(request, 'nav-quest.html', context)
     else:
         return redirect('home')
+
+
+def cadastrar_quest(request):
+    pass

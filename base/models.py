@@ -7,9 +7,6 @@ class Area(models.Model):
     cod_area = models.CharField(primary_key=True, max_length=45)
     nome_area = models.CharField(max_length=90)
 
-
-
-
 class Curso(models.Model):
 
     cod_curso = models.CharField(primary_key=True, max_length=45)

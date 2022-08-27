@@ -86,7 +86,7 @@
             <p><b>Alternativas</b></p>
             <div class="py-2">
                 <label>
-                    <input  class="form-check-input" type="radio" name="user_resp" value="A" required, checked>
+                    <input  class="form-check-input" type="radio" name="user_resp" value="A" required>
                 </label>
                 <b>(A)</b> {{alt_a}}
             </div>
@@ -132,8 +132,32 @@
             <div>
                 <p>| Discriminação: {{param_a}} | Dificuldade {{param_b}} | Acerto ao acaso: {{param_c}} |</p>
             </div>
-            <button type="submit" class="btn btn-success"> Responder </button>
+            <button type="submit" class="btn btn-success" {{desativar}}> Responder </button>
             <br>
+
+                {% if messages %}
+                {% for message in messages %}
+                  {%if message.tags == 'success' %}
+                    <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
+                        <strong>Atenção: </strong>
+                        {{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+
+
+              {% if messages %}
+                {% for message in messages %}
+                    {%if message.tags == 'error' %}
+                        <div class="alert alert-warning alert-dismissible fade show my-2" role="alert">
+                            <strong>Atenção!</strong> {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+             {% endif %}
         </li>
 
 
@@ -150,9 +174,8 @@
 
 
 
-      <!-- Footer -->
+
       <footer class="text-center text-white" style="background-color: #0a4275;">
-          <!-- Grid container -->
           <div class="container p-4 pb-0">
               <!-- Section: CTA -->
               <section class="">
@@ -162,16 +185,12 @@
               </section>
               <!-- Section: CTA -->
           </div>
-          <!-- Grid container -->
-
-          <!-- Copyright -->
           <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
               © 2020 Todos os direitos reservados :
               <a class="text-white" href="#">Questões de Exatas</a>
           </div>
-          <!-- Copyright -->
       </footer>
-  </div>    <!-- Footer -->
+  </div>
 
 
 

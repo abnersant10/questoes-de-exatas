@@ -11,5 +11,4 @@ urlpatterns = [
     path('logout', logout_view, name="logout"),
     #path('nav-quest', nav_quest, name="nav-quest"),
     path('<str:disciplina>/<str:assunto>', nav_quest),
-
 ]
